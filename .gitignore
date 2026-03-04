@@ -18,3 +18,7 @@ venv/
 
 # Outputs
 events.json
+
+# Allow submission artifact
+!submission/
+!submission/events.json
