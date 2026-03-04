@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
 import json
-from typing import Any, Dict, List, Optional
+from datetime import UTC, datetime
+from typing import Any
 
 
 class Logger:
@@ -12,7 +12,8 @@ class Logger:
     - Path is set on first construction and does NOT get overwritten by later Logger(...) calls.
     - Use set_path(...) explicitly when you want to redirect output (useful for tmp_path tests).
     """
-    _instance: Optional["Logger"] = None
+
+    _instance: Logger | None = None
 
     def __new__(cls, path: str = "events.json"):
         if cls._instance is None:
@@ -24,7 +25,7 @@ class Logger:
         if getattr(self, "_initialized", False):
             return
         self.path = path
-        self.events: List[Dict[str, Any]] = []
+        self.events: list[dict[str, Any]] = []
         self._initialized = True
 
     def set_path(self, path: str) -> None:
@@ -33,9 +34,9 @@ class Logger:
     def reset(self) -> None:
         self.events.clear()
 
-    def log(self, event_type: str, data: Dict[str, Any]) -> None:
+    def log(self, event_type: str, data: dict[str, Any]) -> None:
         evt = {
-            "ts": datetime.now(timezone.utc).isoformat(),
+            "ts": datetime.now(UTC).isoformat(),
             "type": event_type,
             "data": data,
         }

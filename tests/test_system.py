@@ -1,11 +1,12 @@
 import json
+
 import pytest
 
 from fix_parser import FixParser
-from order import Order, OrderState
-from risk_engine import RiskEngine
 from logger import Logger
 from main import process_messages
+from order import Order, OrderState
+from risk_engine import RiskEngine
 
 
 def test_fix_parser_parses_order_with_pipe():

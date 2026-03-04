@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from typing import Optional
 
 
 class OrderState(Enum):
@@ -19,7 +18,7 @@ class Order:
     qty: int
     side: str
     state: OrderState = field(default=OrderState.NEW)
-    order_id: Optional[str] = field(default=None)
+    order_id: str | None = field(default=None)
 
     def transition(self, new_state: OrderState) -> bool:
         allowed = {
@@ -35,5 +34,7 @@ class Order:
             print(f"Order {self.symbol} is now {self.state.name}")
             return True
 
-        print(f"[WARN] Transition not allowed: {self.state.name} -> {new_state.name} (Order {self.symbol})")
+        print(
+            f"[WARN] Transition not allowed: {self.state.name} -> {new_state.name} (Order {self.symbol})"
+        )
         return False

@@ -1,21 +1,19 @@
 from __future__ import annotations
 
-from typing import Dict, Optional
-
 
 class FixParser:
     SOH = "\x01"
 
-    def __init__(self, delimiter: Optional[str] = None):
+    def __init__(self, delimiter: str | None = None):
         self.delimiter = delimiter
 
-    def parse(self, raw: str) -> Dict[str, str]:
+    def parse(self, raw: str) -> dict[str, str]:
         if not isinstance(raw, str) or not raw.strip():
             raise ValueError("FIX message must be a non-empty string")
 
         delim = self._detect_delimiter(raw)
         fields = [f for f in raw.strip().split(delim) if f]
-        msg: Dict[str, str] = {}
+        msg: dict[str, str] = {}
 
         for field in fields:
             if "=" not in field:
@@ -45,12 +43,12 @@ class FixParser:
             return self.SOH
         return "|"
 
-    def _require(self, msg: Dict[str, str], tags: list[str]) -> None:
+    def _require(self, msg: dict[str, str], tags: list[str]) -> None:
         missing = [t for t in tags if t not in msg or msg[t] == ""]
         if missing:
             raise ValueError(f"Missing required FIX tags: {missing}")
 
-    def _validate_new_order_single(self, msg: Dict[str, str]) -> None:
+    def _validate_new_order_single(self, msg: dict[str, str]) -> None:
         self._require(msg, ["55", "54", "38", "40"])
 
         if msg["54"] not in {"1", "2"}:
@@ -76,7 +74,7 @@ class FixParser:
             if px <= 0:
                 raise ValueError("Invalid Price (44). Must be > 0.")
 
-    def _validate_quote(self, msg: Dict[str, str]) -> None:
+    def _validate_quote(self, msg: dict[str, str]) -> None:
         self._require(msg, ["55", "132", "133"])
         try:
             bid = float(msg["132"])

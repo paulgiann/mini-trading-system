@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict
 
 from order import Order
 
@@ -10,7 +9,7 @@ from order import Order
 class RiskEngine:
     max_order_size: int = 1000
     max_position: int = 2000
-    positions: Dict[str, int] = field(default_factory=dict)
+    positions: dict[str, int] = field(default_factory=dict)
 
     def check(self, order: Order) -> bool:
         if order.qty <= 0:

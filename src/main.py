@@ -1,27 +1,29 @@
 from __future__ import annotations
 
-from typing import Iterable, List
+from collections.abc import Iterable
 
 from fix_parser import FixParser
+from logger import Logger
 from order import Order, OrderState
 from risk_engine import RiskEngine
-from logger import Logger
 
 
-def process_messages(raw_messages: Iterable[str], events_path: str = "events.json") -> List[Order]:
+def process_messages(raw_messages: Iterable[str], events_path: str = "events.json") -> list[Order]:
     fix = FixParser()
     risk = RiskEngine()
     log = Logger()
     log.set_path(events_path)
     log.reset()
 
-    orders: List[Order] = []
+    orders: list[Order] = []
 
     for raw in raw_messages:
         msg = fix.parse(raw)
 
         if msg["35"] != "D":
-            log.log("MessageIgnored", {"reason": "Unsupported MsgType", "35": msg["35"], "raw": raw})
+            log.log(
+                "MessageIgnored", {"reason": "Unsupported MsgType", "35": msg["35"], "raw": raw}
+            )
             continue
 
         order = Order(symbol=msg["55"], qty=int(msg["38"]), side=msg["54"])
