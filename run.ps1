@@ -1,5 +1,5 @@
 param(
-  [ValidateSet("setup","test","cov","run","all")]
+  [ValidateSet("setup","test","cov","run","format","lint","all")]
   [string]$Task = "all"
 )
 
@@ -36,9 +36,19 @@ switch ($Task) {
     python .\src\main.py
     if (Test-Path .\events.json) { Get-Item .\events.json | Out-String | Write-Host }
   }
+  "format" {
+    Ensure-Venv
+    black .\src .\tests
+  }
+  "lint" {
+    Ensure-Venv
+    ruff check .\src .\tests
+  }
   "all" {
     Ensure-Venv
     Install-Deps
+    ruff check .\src .\tests
+    black .\src .\tests
     pytest -q
     pytest --cov=. --cov-report=term-missing
     python .\src\main.py
