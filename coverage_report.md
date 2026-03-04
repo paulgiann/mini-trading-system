@@ -1,16 +1,16 @@
 # Coverage Report
 
-Generated on: 2026-03-04 11:57:33
+Generated on: 2026-03-04 11:58:22
 
 Command used:
 
-`ash
+```bash
 pytest --cov=. --cov-report=term-missing
-`
+```
 
 Output:
 
-`	ext
+```text
 ============================= test session starts =============================
 platform win32 -- Python 3.13.3, pytest-9.0.2, pluggy-1.6.0
 rootdir: C:\Users\Pavlos\Desktop\mini-trading-system
@@ -34,5 +34,5 @@ tests\test_system.py      79      0   100%
 ----------------------------------------------------
 TOTAL                    261     24    91%
 ============================= 10 passed in 0.11s ==============================
+```
 
-`
