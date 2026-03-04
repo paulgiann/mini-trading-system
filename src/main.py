@@ -11,7 +11,9 @@ from logger import Logger
 def process_messages(raw_messages: Iterable[str], events_path: str = "events.json") -> List[Order]:
     fix = FixParser()
     risk = RiskEngine()
-    log = Logger(path=events_path)
+    log = Logger()
+    log.set_path(events_path)
+    log.reset()
 
     orders: List[Order] = []
 

@@ -81,8 +81,12 @@ def test_logger_singleton_and_save(tmp_path):
     p = tmp_path / "events.json"
 
     l1 = Logger(path=str(p))
-    l2 = Logger(path="ignored.json")
+    l2 = Logger()
     assert l1 is l2
+
+    # Make sure we write to the tmp_path file for this test
+    l1.set_path(str(p))
+    l1.reset()
 
     l1.log("TestEvent", {"x": 1})
     l1.save()
@@ -98,9 +102,11 @@ def test_integration_process_messages_writes_events(tmp_path):
         "8=FIX.4.2|35=D|55=AAPL|54=1|38=10|40=1|10=1",
         "8=FIX.4.2|35=D|55=AAPL|54=1|38=5000|40=1|10=2",
     ]
+
     orders = process_messages(raws, events_path=str(p))
     assert len(orders) == 2
 
+    assert p.exists()
     events = json.loads(p.read_text(encoding="utf-8"))
     types = [e["type"] for e in events]
     assert "OrderCreated" in types
