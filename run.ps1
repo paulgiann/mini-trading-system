@@ -56,7 +56,9 @@ switch ($Task) {
   }
 }
 
-# --- Auto-refresh grader-visible events file (no git commit)
+# --- Auto-refresh submission copy (no git commit)
 if (Test-Path .\events.json) {
-  Copy-Item .\events.json .\events_SUBMISSION.json -Force
+  New-Item -ItemType Directory -Force -Path .\submission | Out-Null
+  Copy-Item .\events.json .\submission\events.json -Force
 }
+

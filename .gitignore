@@ -22,3 +22,9 @@ events.json
 # Allow submission artifact
 !submission/
 !submission/events.json
+
+# Allow grader-required artifact at repo root
+!events.json
+
+# Allow grader-required artifact at repo root
+!events.json
