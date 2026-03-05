@@ -17,3 +17,8 @@ Files:
 - src/main.py
 - tests/test_system.py
 - events.json (generated)
+
+## Submission artifacts
+
+- events_SUBMISSION.json (root) — sample event log output for grading
+- submission/events.json — same content (kept for completeness)
