@@ -55,3 +55,8 @@ switch ($Task) {
     if (Test-Path .\events.json) { Get-Item .\events.json | Out-String | Write-Host }
   }
 }
+
+# --- Auto-refresh grader-visible events file (no git commit)
+if (Test-Path .\events.json) {
+  Copy-Item .\events.json .\events_SUBMISSION.json -Force
+}
