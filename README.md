@@ -20,5 +20,6 @@ Files:
 
 ## Submission artifacts
 
-- events_SUBMISSION.json (root) — sample event log output for grading
-- submission/events.json — same content (kept for completeness)
+- events.json (repo root) — event log output for grading
+- submission/events.json — same content (optional copy)
+
